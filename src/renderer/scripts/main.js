@@ -15,6 +15,11 @@
                     label: `About ${remote.app.getName()}`,
                     role: "about",
                 },
+                {
+                    label: 'Quit',
+                    accelerator: 'CmdOrCtrl+Q',
+                    click() { app.quit(); }
+                }
             ]
         },
         {
