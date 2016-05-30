@@ -4,6 +4,7 @@
     const fs = require("fs");
     const dataURIToBuffer = require("data-uri-to-buffer");
     const {remote} = require('electron');
+    const {beep} = remote;
     const {Menu, MenuItem, dialog} = remote;
 
     const menu = Menu.buildFromTemplate([
@@ -21,6 +22,7 @@
             submenu: [
                 {
                     label: "Save screen",
+                    accelerator: 'CmdOrCtrl+S',
                     async click() {
                         const path = dialog.showSaveDialog({filters: [{name: "png", extensions: ["png"]}]});
 
@@ -39,36 +41,36 @@
                                 alert(err);
                             }
                             else {
-                                // beep()
+                                beep();
                             }
                         });
                     }
                 },
-                {
-                    label: "Open via Twitter",
-                    click() {
-                        console.log("Open via twitter");
-                    }
-                },
-                {
-                    label: "Open via Twitter",
-                    click() {
-                        console.log("Open via YouTube");
-                    }
-                }
+                // {
+                //     label: "Open via Twitter",
+                //     click() {
+                //         console.log("Open via twitter");
+                //     }
+                // },
+                // {
+                //     label: "Open via YouTube",
+                //     click() {
+                //         console.log("Open via YouTube");
+                //     }
+                // }
             ]
         },
-        {
-            label: "Share",
-            submenu: [
-                {
-                    label: "Pinterest",
-                    click() {
-                        console.log("Share to Pinterest");
-                    }
-                },
-            ]
-        },
+        // {
+        //     label: "Share",
+        //     submenu: [
+        //         {
+        //             label: "Pinterest",
+        //             click() {
+        //                 console.log("Share to Pinterest");
+        //             }
+        //         },
+        //     ]
+        // },
         {
             label: "Window",
             submenu: [

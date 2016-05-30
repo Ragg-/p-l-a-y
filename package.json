@@ -1,10 +1,10 @@
 {
-  "name": "app",
-  "productName": "App",
+  "name": "p-l-a-y",
+  "productName": "p-l-a-y",
   "description": "",
-  "version": "0.0.0",
-  "author": "",
-  "license": "",
+  "version": "1.0.0",
+  "author": "Ragg <ragg.devpr@gmail.com>",
+  "license": "MIT",
   "main": "entry.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,6 +32,7 @@
     "babel-preset-stage-3": "^6.5.0",
     "cson-loader": "0.1.0",
     "electron-connect": "^0.4.2",
+    "electron-kit": "0.3.0",
     "electron-packager": "^7.0.2",
     "electron-prebuilt": "^1.2.0",
     "gulp": "^3.8.10",
@@ -61,7 +62,6 @@
     "babel-loader": "^6.2.4",
     "babel-register": "^6.9.0",
     "data-uri-to-buffer": "0.0.4",
-    "electron-kit": "0.3.0",
     "yargs": "^4.7.1"
   }
 }

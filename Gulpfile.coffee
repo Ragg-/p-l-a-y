@@ -133,9 +133,9 @@ g.task "package-json", (cb) ->
         delete json.devDependencies
         newString = JSON.stringify json, null, "  "
 
-        fs.mkdirSync(gulpOption.buildDir)
-        fs.writeFileSync path.join(gulpOption.sourceDir, "package.json"), newString, {encoding: "utf8"}
-        fs.writeFileSync path.join(gulpOption.buildDir, "package.json"), newString, {encoding: "utf8"}
+        try fs.mkdirSync(gulpOption.buildDir)
+        try fs.writeFileSync path.join(gulpOption.sourceDir, "package.json"), newString, {encoding: "utf8"}
+        try fs.writeFileSync path.join(gulpOption.buildDir, "package.json"), newString, {encoding: "utf8"}
 
     cb()
     return
@@ -191,6 +191,39 @@ g.task "watch", ->
 
 g.task "packaging", (cb) ->
     pack = require "electron-packager"
+
+    if fs.existsSync(gulpOption.buildDir + "node_modules")
+        try fs.unlinkSync(gulpOption.buildDir + "node_modules")
+
+    try fs.mkdirSync(gulpOption.buildDir + "node_modules")
+
+    checkdep = (packageName, depList = []) =>
+        try
+            pdep = require(path.join(__dirname, "node_modules", packageName, "package.json")).dependencies
+            deps = Object.keys(pdep)
+
+            for dep in deps
+                if depList.indexOf(dep) == -1
+                    console.log "dep: %s", dep
+                    depList.push dep
+                    checkdep(dep, depList)
+        return
+
+    packageJson = require(path.join(gulpOption.buildDir, "package.json"))
+    dependencies = Object.keys(packageJson.dependencies)
+    dependencies.push("amdefine")
+    for dep, version of packageJson.dependencies
+        checkdep(dep, dependencies)
+
+    # console.log dependencies
+    for dep in dependencies
+        try
+            fs.symlinkSync(
+                path.join(__dirname, "node_modules/", dep),
+                path.join(gulpOption.buildDir, "node_modules/", dep),
+                "dir"
+            )
+
     pack envRequireConfig("electron.coffee"), cb
 
 #
